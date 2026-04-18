@@ -1897,6 +1897,10 @@ tab-group & {
 }
 }
 
+.tab-note-icon {
+  pointer-events: auto;
+}
+
 .tabbrowser-tab:not([pinned]):hover .tab-icon-image {
   visibility: hidden;
 }
@@ -3946,8 +3950,27 @@ tab-split-view-wrapper & {
   display: none !important;
 }
 
+.tab-note-icon-overlay {
+  display: none !important;
+.tabbrowser-tab[pinned][tab-note]:not([crashed], [soundplaying], [muted], [activemedia-blocked]) & {
+  display: revert !important;
+}
+}
+
+.tab-note-icon {
+.tabbrowser-tab[tab-note] & {
+  display: revert !important;
+tab-split-view-wrapper & {
+  display: none !important;
+}
+}
+.tabbrowser-tab[pinned] & {
+  display: none !important;
+}
+}
+
 .tab-audio-button:is([soundplaying], [muted], [activemedia-blocked]) {
-  display: block !important;
+  display: flex !important;
   background-repeat: no-repeat;
   background-position: center;
   -moz-context-properties: fill, fill-opacity;
@@ -3979,6 +4002,13 @@ tab-split-view-wrapper & {
   display: none !important;
 }
 
+#tab-preview-panel {
+  pointer-events: none;
+[data-l10n-id="tab-context-add-note"] {
+  display: none;
+}
+}
+
 #sidebar-main {
   height: calc(100% - 16px) !important;
   min-width: 240px !important;
@@ -3993,6 +4023,7 @@ tab-split-view-wrapper & {
   backdrop-filter: blur(15px);
   overflow: unset !important;
   transition: left, box-shadow .25s;
+  transition-delay: .5s;
   box-shadow: var(--bs1);
 @media (prefers-color-scheme: dark) {
   box-shadow: var(--bs2);
@@ -4015,7 +4046,7 @@ tab-split-view-wrapper & {
   width: 35px;
   height: 100%;
 }
-:has(#sidebar-main:hover, #tabContextMenu:hover, .tab-group-editor-panel[panelopen], #tabbrowser-tabs[movingtab], #toolbar-context-menu > menuitem:is(#toolbar-context-openANewTab, #toolbar-context-reloadSelectedTab, #toolbar-context-reloadSelectedTabs, #toolbar-context-bookmarkSelectedTab, #toolbar-context-bookmarkSelectedTabs, #toolbar-context-selectAllTabs, #toolbar-context-undoCloseTab):hover) & {
+:has(#sidebar-main:hover, #tabContextMenu:hover, .tab-group-editor-panel[panelopen], .tab-note-editor-panel[panelopen], #tabbrowser-tabs[movingtab], #toolbar-context-menu > menuitem:is(#toolbar-context-openANewTab, #toolbar-context-reloadSelectedTab, #toolbar-context-reloadSelectedTabs, #toolbar-context-bookmarkSelectedTab, #toolbar-context-bookmarkSelectedTabs, #toolbar-context-selectAllTabs, #toolbar-context-undoCloseTab):hover) & {
   left: 8px;
   transition: cubic-bezier(.27, 1.217, .17, 1.0117) .5s;
 }
