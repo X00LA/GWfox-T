@@ -56,7 +56,6 @@
   --arrowpanel-border-radius: 12px !important;
   --in-content-box-background: light-dark(rgba(155, 155, 155, .2), rgba(195, 195, 195, .2)) !important;
   --background-color-box: light-dark(rgba(155, 155, 155, .2), rgba(195, 195, 195, .2)) !important;
-  --border-color: transparent !important;
   --in-content-box-border-color: transparent !important;
   --sidebar-background-color: transparent !important;
   --sidebar-border-color: transparent !important;
@@ -89,7 +88,7 @@
   --color-accent-primary-active: light-dark(color-mix(in srgb, var(--bg0) 90%, #000), color-mix(in srgb, var(--bg0) 80%, #000)) !important;
   --color-accent-primary-selected: light-dark(var(--bg0), color-mix(in srgb, var(--bg0) 90%, #000)) !important;
   --focus-outline-color: light-dark(color-mix(in srgb, var(--bg0) 55%, transparent), color-mix(in srgb, var(--bg0) 45%, #555)) !important;
-  :not(:-moz-window-inactive) {::selection {background:color-mix(in srgb, var(--bg0), transparent 75%) !important;}}
+  :not(:-moz-window-inactive) { ::selection { background:color-mix(in srgb, var(--bg0), transparent 75%) !important; } }
 }
 @media not -moz-pref("gwt.atbc") {
   --toolbar-bgcolor: light-dark(#fff, #202121) !important;
@@ -114,7 +113,15 @@
 }
 
 :root:not([inDOMFullscreen], [chromehidden~="toolbar"]) {
-#tabbrowser-tabbox browser:not(.devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe) {
+#browser > * { 
+  backface-visibility: hidden !important;
+}
+.browserStack,
+#tabbrowser-tabpanels,
+browser[type="content"] {
+  backface-visibility: unset !important;
+}
+.browserContainer {
   background-color: light-dark(#fff, #202121) !important;
 }
 }
@@ -142,16 +149,13 @@
 #tabbrowser-tabbox {
   box-shadow: none !important;
   outline: none !important;
-& browser {
-  clip-path: inset(0 round .1px) !important;
-}
 }
 
 #tabbrowser-tabpanels {
   background: none !important;
 &[splitview] {
 .browserContainer {
-  border-radius: 12px !important;  
+  border-radius: 12px !important;
 }
 .split-view-panel {
   margin: 2px 8px 8px 8px !important;
@@ -195,6 +199,7 @@ split-view-footer {
 }
 
 #navigator-toolbox {
+  margin-top: 0 !important;
   border: none !important;
   z-index: unset !important;
 }
@@ -408,7 +413,7 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 
 @media -moz-pref("gwt.oneliner") {
 @media not -moz-pref("sidebar.verticalTabs") {
-#identity-icon-label, .titlebar-spacer, #nav-bar:not([customizing]) toolbarspring {
+#trust-label, #identity-icon-label, .titlebar-spacer, #nav-bar:not([customizing]) toolbarspring {
   display: none !important;
 }
 
@@ -794,12 +799,14 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
   opacity: 0;
 }
 
+#identity-box[pageproxystate="valid"].chromeUI,
 #identity-permission-box, #notification-popup-box, #trust-icon-container {
   margin-inline-start: calc(-16px - 2 * var(--urlbar-icon-padding));
   opacity: 0;
 }
 
 #urlbar:not([breakout][breakout-extend]) {
+#identity-box[pageproxystate="valid"].chromeUI,
 .urlbar-page-action, #identity-permission-box, #notification-popup-box, #trust-icon-container {
   transition: .2s;
 }
@@ -830,6 +837,9 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 #urlbar[open] #notification-popup-box,
 #urlbar:hover #identity-permission-box,
 #urlbar:hover #notification-popup-box,
+#urlbar[open] #identity-box[pageproxystate="valid"].chromeUI,
+#urlbar:hover #identity-box[pageproxystate="valid"].chromeUI,
+:has(.identity-box-button[open]) #identity-box[pageproxystate="valid"].chromeUI,
 #identity-permission-box[open],
 #notification-popup-box[open] {
   opacity: 1;
@@ -1148,6 +1158,7 @@ toolbar .toolbarbutton-1:not(#back-button, #forward-button, #PanelUI-menu-button
 .tab-background {
   border: none !important;
   box-shadow: none !important;
+  outline: none !important;
 @media -moz-pref("sidebar.verticalTabs") {
 #tabbrowser-tabs[expanded] & {
   border-radius: 8px !important;
@@ -1166,8 +1177,32 @@ toolbar .toolbarbutton-1:not(#back-button, #forward-button, #PanelUI-menu-button
 .tabbrowser-tab & {
 tab-group:not([collapsed]) > tab > .tab-stack > & {
   background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 14%, transparent) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
+&[selected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
+}
 tab:not([selected]):hover & {
   background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 21%, transparent) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
+&[selected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
+}
 }
 }
 }
@@ -1183,6 +1218,12 @@ tab:not([selected]):hover & {
 &[selected]:not(tab-group > tab-split-view-wrapper &, tab-group:not([collapsed]) > tab > .tab-stack > &, tab-group[collapsed] > .tabbrowser-tab[visuallyselected] > .tab-stack > &, .tabbrowser-tab[pinned] &) {
   background: light-dark(rgba(255, 255, 255, .8), rgba(255, 255, 255, .15)) !important;
   box-shadow: var(--bs5) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
 }
 .tabbrowser-tab[pinned] & {
   max-height: 32px !important;
@@ -1202,6 +1243,18 @@ tab-split-view-wrapper & {
 .tabbrowser-tab & {
 :not(:hover) & {
   background-color: var(--bg5) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
+&[selected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
+}
 tab-group > tab-split-view-wrapper & {
   background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 14%, transparent) !important;
 &[selected] {
@@ -1221,6 +1274,12 @@ tab-split-view-wrapper & {
 &[selected]:not(tab-group > tab-split-view-wrapper &, tab-group:not([collapsed]) > tab > .tab-stack > &, tab-group[collapsed] > .tabbrowser-tab[visuallyselected] > .tab-stack > &) {
   background-color: var(--bg5) !important;
   outline: 2px solid var(--bg1) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
 tab-split-view-wrapper & {
   background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
 }
@@ -1231,6 +1290,12 @@ tab-split-view-wrapper & {
 [orient="vertical"] & {
 &[selected]:not(tab-group > tab-split-view-wrapper &, tab-group:not([collapsed]) > tab > .tab-stack > &, tab-group[collapsed] > .tabbrowser-tab[visuallyselected] > .tab-stack > &) {
   background: var(--button-active-bgcolor) !important;
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
 tab-split-view-wrapper & {
   background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
 }
@@ -1244,6 +1309,12 @@ tab-split-view-wrapper & {
 tab-group:not([collapsed]) > tab > .tab-stack > &,
 tab-group[collapsed] > .tabbrowser-tab[visuallyselected] > .tab-stack > & {
   background: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 24%, transparent) !important;
+}
+}
+&[multiselected] {
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
 }
 }
 }
@@ -1391,7 +1462,7 @@ tab-split-view-wrapper {
 &[tab-note] {
 .tab-icon-stack {
   margin-bottom: -2px;
-}    
+}
 }
 }
 
@@ -1945,7 +2016,9 @@ menupopup[needsgutter] {
   }
 }
 
-.panel-arrowcontent {
+#sanitizeEverythingWarningBox,
+.menupopup-arrowscrollbox, .panel-arrowcontent,
+#editBMPanel_folderTree, #editBMPanel_tagsSelector {
   border: none !important;
 }
 
@@ -2122,7 +2195,7 @@ window[role="dialog"] {
   height: 20px !important;
   border-radius: 50px !important;
   margin-top: 2px !important;
-  margin-bottom: 2px !important; 
+  margin-bottom: 2px !important;
 }
 
 #unified-extensions-view .panel-header,
@@ -2212,7 +2285,7 @@ tree {
   --background-color-box: light-dark(rgba(255, 255, 255, .95), rgba(0, 0, 0, .95)) !important;
 }
 
-input {--background-color-box: light-dark(rgba(155, 155, 155, .2), rgba(195, 195, 195, .2)) !important;}
+input { --background-color-box: light-dark(rgba(155, 155, 155, .2), rgba(195, 195, 195, .2)) !important; }
 
 .search-container {
   border: none !important;
@@ -2234,7 +2307,7 @@ input[type="radio"] {
 }
 }
 
-@-moz-document regexp("chrome:\/\/.*") {
+@-moz-document regexp("chrome:\/\/(?!devtools).*") {
 input[type="checkbox"] {
   appearance: none !important;
   background-color: var(--button-bgcolor) !important;
@@ -2432,8 +2505,8 @@ richlistbox {
 }
 }
 
-findbar {
-  position: fixed !important;
+.browserContainer > findbar {
+  position: absolute !important;
   top: 4px;
   right: -16px;
   width: 100% !important;
@@ -2445,8 +2518,13 @@ findbar {
   pointer-events: none;
   animation-name: slide-in;
   animation-duration: 350ms;
-&:is([hidden]) {
+&[hidden] {
   animation-name: slide-out;
+}
+&::after {
+  content: "";
+  display: flex;
+  flex-grow: 100;
 }
 checkbox {
   height: 24px;
@@ -2455,7 +2533,7 @@ checkbox {
   display: block !important;
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
-  fill-opacity: .4;      
+  fill-opacity: .4;
 .findbar-highlight & {
   content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='context-fill' fill-opacity='context-fill-opacity' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 4.079 10.726 C 3.887 10.539 3.822 10.265 3.907 10.013 L 4.631 7.885 L 9.065 3.552 C 9.529 3.1 10.281 3.1 10.744 3.552 L 11.416 4.207 C 11.879 4.66 11.879 5.398 11.416 5.85 L 6.983 10.183 L 4.809 10.893 C 4.734 10.917 4.658 10.929 4.582 10.929 C 4.396 10.929 4.215 10.858 4.079 10.726 Z M 8.95 4.759 L 10.182 5.964 L 10.856 5.304 C 11.01 5.153 11.01 4.907 10.856 4.757 L 10.184 4.1 C 10.03 3.949 9.778 3.949 9.625 4.1 L 8.95 4.759 Z M 4.707 10.111 L 6.555 9.509 L 9.621 6.511 L 8.389 5.307 L 5.323 8.304 L 4.707 10.111 Z M 12.615 12.095 L 11.478 12.434 C 10.917 12.603 10.315 12.633 9.739 12.52 L 8.42 12.261 C 7.818 12.144 7.185 12.227 6.638 12.494 C 6.235 12.692 5.804 12.787 5.376 12.787 C 4.645 12.787 3.926 12.508 3.384 11.98 L 3.912 11.4 L 3.944 11.432 C 4.561 12.036 5.502 12.185 6.283 11.803 C 6.988 11.46 7.803 11.352 8.575 11.503 L 9.894 11.762 C 10.341 11.85 10.809 11.826 11.247 11.696 L 12.383 11.356 L 12.615 12.095 Z'/%3E%3C/svg%3E");
 }
@@ -2476,11 +2554,6 @@ checkbox {
   fill-opacity: 1;
 }
 }
-&::after {
-  content: "";
-  display: flex;
-  flex-grow: 100;
-}
 .checkbox-check, .checkbox-label,
 .findbar-find-status {
   display: none;
@@ -2490,53 +2563,45 @@ checkbox {
   display: none;
 }
 }
-}
-
 .findbar-highlight, .findbar-case-sensitive,
-.findbar-entire-word, .findbar-closebutton,
-.findbar-match-diacritics {
-  position: fixed;
-  right: 18px;
+.findbar-entire-word, .findbar-match-diacritics {
+  position: absolute;
+  right: 78px;
+&:not([hidden]) {
+  display: flex !important;
 }
-
-.findbar-highlight {
-  right: 93px;
 }
-
 .findbar-case-sensitive {
-  right: 110px;
+  right: 95px;
 }
-
 .findbar-entire-word {
-  right: 128px;
+  right: 113px;
 }
-
 .findbar-match-diacritics {
-  right: 146px;
+  right: 131px;
 }
-
 .findbar-closebutton {
-  margin-top: 13px !important;
+  position: absolute;
+  top: 19px;
+  right: 41px;
+  margin: 0 !important;
   background: none !important;
   pointer-events: auto;
   z-index: 1;
-}
-
-.findbar-closebutton > image {
+& > image {
   padding: 5px;
   max-height: 24px !important;
   max-width: 24px !important;
-}
-
-.findbar-closebutton:hover > image {
+.findbar-closebutton:hover & {
   background: var(--button-hover-bgcolor);
-  border-radius: 50%;
+  border-radius: 50px;
 }
-
-.findbar-closebutton:active > image {
+.findbar-closebutton:active & {
   background: var(--button-active-bgcolor);
+  border-radius: 50px;
 }
-
+}
+}
 .findbar-container {
   height: 42px !important;
   padding-inline-start: 10px;
@@ -2546,14 +2611,32 @@ checkbox {
   overflow-inline: visible !important;
   flex-direction: row-reverse;
   border-radius: 50px !important;
-}
-
-.findbar-container > hbox {
+& > hbox {
+  width: 260px !important;
   margin-right: 30px;
+  padding-right: 5px;
+toolbarbutton {
+  margin: 0 !important;
+  border-radius: 50px !important;
+  height: 24px !important;
+  width: 24px !important;
+  outline: none !important;
+&:hover {
+  background: var(--button-hover-bgcolor) !important;
 }
-
+&:active {
+  background: var(--button-active-bgcolor) !important;
+}
+&[disabled] {
+  background: none !important;
+}
+}
+}
+}
 .findbar-textbox {
-  width: 17em !important;
+  width: 100% !important;
+  min-height: 24px;
+  margin-inline-end: 5px !important;
   background: rgba(165, 165, 165, .1) !important;
   outline-style: solid !important;
   outline-color: transparent !important;
@@ -2567,14 +2650,13 @@ checkbox {
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
   fill-opacity: .65;
-}
-
-.findbar-textbox[focused],
-.findbar-textbox:focus {
+&:focus {
   outline-color: var(--focus-outline-color) !important;
-  outline-width: 3.5px !important;
+  outline-width: 3px !important;
   transition: all .3s cubic-bezier(1, 0, 0, 1) !important;
   box-shadow: none !important;
+}
+}
 }
 
 xul|search-textbox {
@@ -2631,7 +2713,7 @@ input[type="search"]:focus-within,
 input {
   appearance: none !important;
   min-height: 32px !important;
-} 
+}
 }
 
 @-moz-document url("chrome://browser/content/sidebar/sidebar-customize.html") {
@@ -2662,6 +2744,30 @@ body {
 }
 }
 
+#downloadsListBox.allDownloadsListBox {
+  appearance: none !important;
+}
+
+#placesToolbar {
+  border-bottom: 1px solid light-dark(rgba(0, 0, 0, .3), rgba(255, 255, 255, .3)) !important;
+@media (-moz-platform: linux) {
+  border-bottom: 1px solid light-dark(rgba(0, 0, 0, .05), rgba(255, 255, 255, .15)) !important;
+}
+}
+
+treecol, .tree-columnpicker-button {
+  border-inline-start: 1px solid light-dark(rgba(0, 0, 0, .3), rgba(255, 255, 255, .3)) !important;
+  box-shadow: inset 0 -1px light-dark(rgba(0, 0, 0, .3), rgba(255, 255, 255, .3)) !important;
+@media (-moz-platform: linux) {
+  border-inline-start: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .2)) !important;
+  box-shadow: inset 0 -1px light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .2)) !important;
+}
+}
+
+treecol:where([ordinal="1"]) {
+  border-inline-start: none !important;
+}
+
 sidebar-tab-row {
   --button-background-color-ghost-hover: var(--bg1) !important;
   --button-background-color-ghost-active: color-mix(in srgb, var(--bg1) 90%, transparent) !important;
@@ -2677,7 +2783,7 @@ sidebar-tab-row {
   transition: .25s !important;
   --splitter-width: 5px !important;
 #sidebar-box:hover + & {
-  background-color: var(--panel-separator-color) !important;  
+  background-color: var(--panel-separator-color) !important;
 }
 &:hover {
   height: calc(100% - 10px);
@@ -2751,6 +2857,10 @@ sidebar-tab-row {
 
 #identity-box[pageproxystate="valid"].chromeUI #identity-icon {
   list-style-image: url("chrome://devtools/skin/images/browsers/firefox.svg") !important;
+  opacity: .75;
+&:hover, :has(.identity-box-button[open]) & {
+  opacity: 1;
+}
 }
 
 .textbox-search-sign {
@@ -3191,9 +3301,9 @@ sidebar-tab-row {
   content: url("chrome://browser/skin/tab.svg") !important;
 }
 
-#context_fullscreenAutohide::before,
-#toolbar-context-full-screen-autohide::before {
-  content: url("chrome://global/skin/icons/arrows-updown.svg") !important;
+#context_fullscreenAutohide,
+#toolbar-context-full-screen-autohide {
+  display: none !important;
 }
 
 #context_fullscreenExit::before,
