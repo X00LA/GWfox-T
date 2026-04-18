@@ -1224,6 +1224,12 @@ tab:not([selected]):hover & {
   background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
 }
 }
+tab-split-view-wrapper & {
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
+}
 }
 .tabbrowser-tab[pinned] & {
   max-height: 32px !important;
@@ -1236,7 +1242,10 @@ tab:not([selected]):hover & {
 }
 }
 tab-split-view-wrapper & {
-  background: color-mix(in srgb, var(--bg0) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
 }
 }
 @media -moz-pref("gwt.oneliner") {
@@ -1267,7 +1276,10 @@ tab-group > tab-split-view-wrapper & {
 }
 }
 tab-split-view-wrapper & {
-  background: color-mix(in srgb, var(--bg0) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
 }
 }
   outline: 1px solid var(--bg3) !important;
@@ -1281,7 +1293,10 @@ tab-split-view-wrapper & {
 }
 }
 tab-split-view-wrapper & {
-  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
 }
 }
 }
@@ -1297,11 +1312,17 @@ tab-split-view-wrapper & {
 }
 }
 tab-split-view-wrapper & {
-  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+  background: color-mix(in srgb, var(--bg1) 36%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 36%, transparent) !important;
+}
 }
 }
 tab-split-view-wrapper & {
-  background: color-mix(in srgb, var(--bg0) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--bg1) 26%, transparent) !important;
+@media -moz-pref("gwt.ac") {
+  background: color-mix(in srgb, var(--bg0) 26%, transparent) !important;
+}
 }
 }
 &[selected] {
@@ -3971,8 +3992,7 @@ tab-split-view-wrapper & {
   background-color: var(--bg4);
   backdrop-filter: blur(15px);
   overflow: unset !important;
-  transition: .25s;
-  transition-delay: .5s;
+  transition: left, box-shadow .25s;
   box-shadow: var(--bs1);
 @media (prefers-color-scheme: dark) {
   box-shadow: var(--bs2);
