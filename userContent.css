@@ -64,6 +64,13 @@
 }
 }
 
+.toggle-button {
+  --toggle-background-color-pressed: var(--color-accent-primary) !important;
+  --toggle-background-color-pressed-hover: var(--color-accent-primary-hover) !important;
+  --toggle-background-color-pressed-active: var(--color-accent-primary-active) !important;
+  --toggle-dot-background-color-on-pressed: #fff !important;
+}
+
 @media -moz-pref("gwt.ac") {
 ::selection {
   background: var(--bg7) !important;
@@ -93,7 +100,7 @@
   background-color: #436ee3 !important;
 }
 
-@-moz-document url-prefix(about:) {
+@-moz-document url-prefix("about:") {
 @media not -moz-pref("gwt.atbc") {
 body { background-color: #202121 !important; } }
 
@@ -126,14 +133,7 @@ body { background-color: #202121 !important; } }
 }
 }
 
-.toggle-button {
-  --toggle-background-color-pressed: var(--color-accent-primary) !important;
-  --toggle-background-color-pressed-hover: var(--color-accent-primary-hover) !important;
-  --toggle-background-color-pressed-active: var(--color-accent-primary-active) !important;
-  --toggle-dot-background-color-on-pressed: #fff !important;
-}
-
-@-moz-document url-prefix(about:), regexp("chrome:\/\/.*") {
+@-moz-document url-prefix("about:"), regexp("chrome:\/\/(?!devtools).*") {
 input[type="search"] {
   background-color: light-dark(rgba(85, 85, 85, .1), rgba(190, 190, 190, .1)) !important;
   border-color: transparent !important;
@@ -279,17 +279,57 @@ input:not(.wallpaper-input) {
 }
 }
 
-@-moz-document url-prefix(about:) {
+@-moz-document url-prefix("about:") {
 :root {
   --link-color: AccentColor !important;
   --link-color-hover: color-mix(in srgb, AccentColor 90%, #fff) !important;
   --link-color-active: color-mix(in srgb, AccentColor 90%, #000) !important;
   --link-color-visited: AccentColor !important;
+  --border-color-deemphasized: light-dark(rgba(50, 50, 50, .15), rgba(225, 225, 225, .15)) !important;
 @media -moz-pref("gwt.ac") {
   --link-color: light-dark(var(--bg0), color-mix(in srgb, var(--bg0) 90%, #000)) !important;
   --link-color-hover: light-dark(color-mix(in srgb, var(--bg0) 90%, #fff), color-mix(in srgb, var(--bg0) 80%, #fff)) !important;
   --link-color-active: light-dark(color-mix(in srgb, var(--bg0) 90%, #000), color-mix(in srgb, var(--bg0) 80%, #000)) !important;
   --link-color-visited: light-dark(var(--bg0), color-mix(in srgb, var(--bg0) 90%, #000)) !important;
+}
+}
+}
+
+@-moz-document url-prefix("about:buildconfig"), url-prefix("about:cache"), url-prefix("about:support") {
+th {
+ color: #fff !important;
+ border: none !important;
+}
+td {
+  border: .5px solid var(--in-content-box-border-color) !important;
+}
+table {
+  border-radius: 0 !important;
+}
+.action-box, table {
+  border: none !important;
+  background-color: var(--bg1) !important;
+}
+}
+
+@-moz-document url-prefix("about:newtab"), url-prefix("about:home"), url-prefix("about:addons") {
+panel-list {
+  --panel-item-border-radius: 8px;
+  --panel-item-background-color: color-mix(in srgb, -moz-menuhover 80%, transparent);
+  --panel-item-color: #fff;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: var(--bs1) !important;
+  padding: 6px !important;
+  background-color: var(--bg4) !important;
+  backdrop-filter: blur(15px) !important;
+@media -moz-pref("gwt.ac") {
+  --panel-item-background-color: color-mix(in srgb, var(--bg0) 80%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  box-shadow: var(--bs2) !important;
+  outline: 1px solid rgba(235, 235, 235, .2) !important;
+  outline-offset: -1.5px !important;
 }
 }
 }
@@ -309,7 +349,7 @@ sidebar-tab-row {
 }
 
 @-moz-document url-prefix("about:firefoxview") {
-* {--fxview-border: transparent !important;}
+* { --fxview-border: transparent !important; }
 
 .card-container {
   background: light-dark(rgba(85, 85, 85, .1), rgba(190, 190, 190, .1)) !important;
@@ -319,19 +359,94 @@ sidebar-tab-row {
 
 @-moz-document url-prefix("about:addons") {
 ::after { content: none !important; }
+button:not(.toggle-button) {
+ border-radius: 6px !important;
+&:is(:hover, :active) {
+  background-color: color-mix(in srgb, -moz-menuhover 80%, transparent) !important;
+  color: #fff !important;
+@media -moz-pref("gwt.ac") {
+  background-color: color-mix(in srgb, var(--bg0) 80%, transparent) !important;
+}
+}
+}
+.card {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: var(--bg1) !important;
+}
+}
+
+@-moz-document url-prefix("about:config") {
+#about-config-search, #prefs {
+  background-color: var(--bg1) !important;
+  border: none !important;
+}
+#prefs > tr > td, .add > td::before,
+#prefs[has-visible-prefs] > .add > th,
+#prefs[has-visible-prefs] > .add > th::before {
+  border: none !important;
+}
 }
 
 @-moz-document url-prefix("about:preferences") {
+* {
+  --card-border: none !important;
+  --card-box-shadow: none !important;
+  --card-background-color: var(--bg1) !important;
+  --box-border: none !important;
+  --box-group-border: none !important;
+  --promo-background-color: var(--bg1) !important;
+}
 .navigation::after {
   content: none !important;
+}
+treecol, .tree-columnpicker-button {
+  box-shadow: none !important;
+}
+.container, #input, #blockAiGroup, listheader {
+  border: none !important;
+}
+input:not([type="checkbox"], [type="radio"], [type="button"]) {
+  background-color: var(--bg1) !important;
+&:focus {
+  outline: 3px solid var(--focus-outline-color) !important;
+}
+}
+.privacy-detailedoption {
+  border-color: transparent !important;
+  background-color: var(--bg1) !important;
+}
+.privacy-detailedoption.selected {
+  border-color: var(--border-color-selected) !important;
+  background-color: var(--section-highlight-background-color) !important;
+}
+.qr-code-box:not([hidden="true"]), .info-box-container {
+  background-color: var(--bg1) !important;
+}
+#blockAiGroup {
+  background-color: transparent !important;
+}
+.sync-info-box, #translations-manage-install-list, #handlersView,
+#fxaSyncComputerName, #oneClickSearchProvidersGroup > #engineList {
+  background-color: var(--bg1) !important;
+  border: none !important;
+}
+.button, .picker-item, .select-wrapper {
+  background-color: var(--bg1) !important;
+&:hover {
+  background-color: var(--bg2) !important;
+}
+&:hover:active {
+  background-color: var(--bg3) !important;
+}
+&:not([checked]) {
+  border: none !important;
+}
 }
 }
 
 @-moz-document url("about:privatebrowsing") {
-:root {
-  --in-content-page-background: transparent !important;
-}
-
+:root { --in-content-page-background: transparent !important; }
 body {
   --newtab-search-icon: url("chrome://global/skin/icons/search-glass.svg") !important;
   background-repeat: no-repeat;
@@ -340,11 +455,9 @@ body {
   background-attachment: fixed;
   background-image: repeating-linear-gradient(-45deg, #68249a 0 250px, #202020 0 500px) !important;
 }
-
 .container {
   margin-top: -40px !important;
 }
-
 .search-handoff-button {
   background-color: rgba(25, 25, 25, .55) !important;
   border-radius: 12px !important;
@@ -354,21 +467,17 @@ body {
   border: none !important;
   fill: rgba(255, 255, 255, .7) !important;
 }
-
 .search-handoff-button.disabled {
   opacity: 1 !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, .1) !important;
   fill: rgba(255, 255, 255, .6) !important;
 }
-
 .fake-textbox {
   color: #fff !important;
 }
-
 .search-handoff-button.disabled .fake-textbox {
   color: #999 !important;
 }
-
 .logo {
   background: url("chrome://browser/skin/privateBrowsing.svg") no-repeat center center !important;
   background-size: 76px !important;
@@ -377,17 +486,15 @@ body {
   -moz-context-properties: fill;
   fill: #b9b9b9;
 }
-
 .wordmark {
   fill: #b9b9b9 !important;
 }
-
-.info, .promo-visible {
-  display: none;
+.info, .info-border, .promo-visible, .promo-dismiss {
+  display: none !important;
 }
 }
 
-@-moz-document url("about:newtab"), url("about:home") {
+@-moz-document url-prefix("about:newtab"), url-prefix("about:home") {
 body { 
   --newtab-search-icon: url("chrome://global/skin/icons/search-glass.svg") !important;
   background-image: var(--newtab-wallpaper, ""), repeating-linear-gradient(-45deg, var(--newtab-wallpaper-color, "") 0 250px, #fff 0 500px) !important;
@@ -748,25 +855,6 @@ body {
 &::after {
   content: none !important;
 }
-> panel-list {
-  --panel-item-border-radius: 8px;
-  --panel-item-background-color: color-mix(in srgb, -moz-menuhover 80%, transparent);
-  --panel-item-color: #fff;
-  border: none !important;
-  border-radius: 12px !important;
-  box-shadow: var(--bs1) !important;
-  padding: 6px !important;
-  background-color: var(--bg4) !important;
-  backdrop-filter: blur(15px) !important;
-@media -moz-pref("gwt.ac") {
-  --panel-item-background-color: color-mix(in srgb, var(--bg0) 80%, transparent);
-}
-@media (prefers-color-scheme: dark) {
-  box-shadow: var(--bs2) !important;
-  outline: 1px solid rgba(235, 235, 235, .2) !important;
-  outline-offset: -1.5px !important;
-}
-}
 }
 
 *+button {
@@ -793,8 +881,8 @@ body {
 .search-inner-wrapper, .tile, .context-menu-button.icon, .location-input-wrapper, .weatherInfoLink, .weatherNotAvailable, .weatherButtonContextMenu, .personalize-button {
   background-color: var(--bg1) !important;
   box-shadow: none !important;
-&:hover {background-color: var(--bg2) !important;}
-&:active {background-color: var(--bg3) !important;}
+&:hover { background-color: var(--bg2) !important; }
+&:active { background-color: var(--bg3) !important; }
 @media -moz-pref("browser.newtabpage.activity-stream.newtabWallpapers.wallpaper") {
   background-color: var(--bg4) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, .1) !important;
