@@ -3975,7 +3975,6 @@ tab-split-view-wrapper & {
   background-position: center;
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
-  fill-opacity: .6;
 &[soundplaying] {
   background-image: url("chrome://browser/skin/tabbrowser/tab-audio-playing-small.svg");
 }
