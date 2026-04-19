@@ -1846,6 +1846,8 @@ tab-split-view-wrapper {
   margin-inline-start: 0 !important;
 .tab-content {
   margin-inline-start: 8px !important;
+  justify-content: unset !important;
+  padding-inline: var(--space-medium) !important;
 }
 .tab-close-button {
   inset-inline-start: -8px !important;
