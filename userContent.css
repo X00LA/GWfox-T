@@ -346,6 +346,11 @@ sidebar-tab-row {
 }
 }
 }
+.fxview-tab-row-main:is(.muted, .soundplaying, .activemedia-blocked):not(.attention) .fxview-tab-row-favicon::after {
+  inset-inline-start: 1px !important;
+  inset-block-start: 1px !important;
+  background-color: transparent !important;
+}
 }
 
 @-moz-document url-prefix("about:firefoxview") {
